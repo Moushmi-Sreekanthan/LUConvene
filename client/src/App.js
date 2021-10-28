@@ -19,7 +19,6 @@ function App() {
         <Route exact path="/">
           {user ? <Home /> : <Register />}
         </Route>
-        
         <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
         <Route path="/register">
           {user ? <Redirect to="/" /> : <Register />}
