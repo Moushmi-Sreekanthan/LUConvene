@@ -33,9 +33,9 @@ export default function Register() {
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Lu-Convene</h3>
+          <h3 className="loginLogo">LUConvene</h3>
           <span className="loginDesc">
-            Connect with your friends and students of Lamar University.
+            Connect with friends and the world around you on LUConvene.
           </span>
         </div>
         <div className="loginRight">
@@ -62,7 +62,7 @@ export default function Register() {
               minLength="6"
             />
             <input
-              placeholder="Confirm Password"
+              placeholder="Password Again"
               required
               ref={passwordAgain}
               className="loginInput"
@@ -71,7 +71,7 @@ export default function Register() {
             <button className="loginButton" type="submit">
               Sign Up
             </button>
-            <button className="loginRegisterButton" onClick={() => history.push("/login")}>Log into Account</button>
+            <button className="loginRegisterButton">Log into Account</button>
           </form>
         </div>
       </div>

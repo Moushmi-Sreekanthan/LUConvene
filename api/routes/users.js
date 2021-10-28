@@ -41,13 +41,16 @@ router.delete("/:id", async (req, res) => {
 });
 
 //get a user
-router.get("/", async (req, res) => {
-  const userId = req.query.userId;
-  const username = req.query.username;
+router.get("/:id", async (req, res) => {
+  const userId = req.body.userId;
+  const username = req.body.username;
+  console.log("user===",req)
+
   try {
-    const user = userId
+    const user = await User.findById(userId)
       ? await User.findById(userId)
       : await User.findOne({ username: username });
+      console.log("user===",user)
     const { password, updatedAt, ...other } = user._doc;
     res.status(200).json(other);
   } catch (err) {
@@ -58,7 +61,7 @@ router.get("/", async (req, res) => {
 //get friends
 router.get("/friends/:userId", async (req, res) => {
   try {
-    const user = await User.findById(req.params.userId);
+    const user = await User.findById(req.body.userId);
     const friends = await Promise.all(
       user.followings.map((friendId) => {
         return User.findById(friendId);
