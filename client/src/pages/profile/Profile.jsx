@@ -1,5 +1,7 @@
 import "./profile.css";
 import Topbar from "../../components/topbar/Topbar";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Rightbar from "../../components/rightbar/Rightbar";
 import Feed from "../../components/feed/Feed";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -9,7 +11,7 @@ export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
   const username = useParams().username;
-
+console.log("useParams===",useParams);
   useEffect(() => {
     const fetchUser = async () => {
       const res = await axios.get(`/users?username=${username}`);
@@ -22,25 +24,18 @@ export default function Profile() {
     <>
       <Topbar />
       <div className="profile">
+        <Sidebar />
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">
               <img
                 className="profileCoverImg"
-                src={
-                  user.coverPicture
-                    ? PF + user.coverPicture
-                    : PF + "person/noCover.png"
-                }
+                src="/assets/person/noCover.png"
                 alt=""
               />
               <img
                 className="profileUserImg"
-                src={
-                  user.profilePicture
-                    ? PF + user.profilePicture
-                    : PF + "person/noAvatar.png"
-                }
+                src="/assets/person/noAvatar.png"
                 alt=""
               />
             </div>
@@ -51,6 +46,7 @@ export default function Profile() {
           </div>
           <div className="profileRightBottom">
             <Feed username={username} />
+            <Rightbar user={user} />
           </div>
         </div>
       </div>

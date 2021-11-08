@@ -36,6 +36,24 @@ const AuthReducer = (state, action) => {
           ),
         },
       };
+      case "SEARCH_START":
+      return {
+        user: null,
+        isFetching: true,
+        error: false,
+      };
+    case "SEARCH_SUCCESS":
+      return {
+        user: action.payload,
+        isFetching: false,
+        error: false,
+      };
+    case "SEARCH_FAILURE":
+      return {
+        user: null,
+        isFetching: false,
+        error: true,
+      };
     default:
       return state;
   }
