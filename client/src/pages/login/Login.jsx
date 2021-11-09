@@ -1,4 +1,6 @@
 import { useContext, useRef } from "react";
+import { Link } from "react-router-dom";
+
 import "./login.css";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
@@ -51,6 +53,9 @@ export default function Login() {
               )}
             </button>
             <span className="loginForgot">Forgot Password?</span>
+            <Link className="loginRegisterButtonLink"
+        to={`/register`}
+        >
             <button className="loginRegisterButton">
               {isFetching ? (
                 <CircularProgress color="white" size="20px" />
@@ -58,6 +63,7 @@ export default function Login() {
                 "Create a New Account"
               )}
             </button>
+            </Link>
           </form>
         </div>
       </div>

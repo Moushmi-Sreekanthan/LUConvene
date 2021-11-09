@@ -1,9 +1,21 @@
 import axios from "axios";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import "./register.css";
 import { useHistory } from "react-router";
+import Select from 'react-select'
+
+const options = [
+  { value: 'Computer Science', label: 'Computer Science' },
+  { value: 'Mechanical Engineering', label: 'Mechanical Engineering' },
+  { value: 'Chemical Engineering', label: 'Chemical Engineering' }
+]
 
 export default function Register() {
+  const [selectedOption, setSelectedOption] = useState('');
+
+
   const username = useRef();
   const email = useRef();
   const password = useRef();
@@ -18,8 +30,10 @@ export default function Register() {
       const user = {
         username: username.current.value,
         email: email.current.value,
+        department: selectedOption.value,
         password: password.current.value,
       };
+      console.log(user);
       try {
         await axios.post("/auth/register", user);
         history.push("/login");
@@ -29,17 +43,21 @@ export default function Register() {
     }
   };
 
+  const handleChange = (selectedOption) =>{
+    setSelectedOption(selectedOption)
+  }
+
   return (
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
           <h3 className="loginLogo">LUConvene</h3>
           <span className="loginDesc">
-            Connect with friends and the world around you on LUConvene.
+          Connect with your friends and students of Lamar University.
           </span>
         </div>
         <div className="loginRight">
-          <form className="loginBox" onSubmit={handleClick}>
+          <form className="registerBox" onSubmit={handleClick}>
             <input
               placeholder="Username"
               required
@@ -53,6 +71,11 @@ export default function Register() {
               className="loginInput"
               type="email"
             />
+            <Select 
+            options={options} 
+            value={selectedOption}
+            onChange={handleChange}/>
+
             <input
               placeholder="Password"
               required
@@ -71,7 +94,11 @@ export default function Register() {
             <button className="loginButton" type="submit">
               Sign Up
             </button>
+            <Link className="loginRegisterButtonLink"
+        to={`/login`}
+        >
             <button className="loginRegisterButton">Log into Account</button>
+            </Link>
           </form>
         </div>
       </div>

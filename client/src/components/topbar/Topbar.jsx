@@ -1,32 +1,57 @@
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
-export default function Topbar() {
+
+export default function Topbar({searchUserList, searchCall}) {
+
+  const [searchValue, setSearchValue] = useState('');
+
   const { user } = useContext(AuthContext);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+  const _handleKeyDown = async (e) => {
+    //e.preventDefault();
+   console.log();
+    if (e.key === 'Enter') {
+      searchCall(searchValue) 
+    }
+  }
+  console.log("target=====", searchUserList)
+
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
         <Link to="/" style={{ textDecoration: "none" }}>
-          <span className="logo">Lu-Convene</span>
+          <span className="logo">LUConvene</span>
         </Link>
       </div>
       <div className="topbarCenter">
         <div className="searchbar">
           <Search className="searchIcon" />
           <input
+            type="text"
+            value={searchValue}
+            // onChange={e => setSearch(e.target.value)}
+            onKeyDown={_handleKeyDown}
+            onChange={(e) => setSearchValue(e.target.value)}
             placeholder="Search for friend"
             className="searchInput"
           />
         </div>
+        <ul>
+          {searchUserList && searchUserList.data.map((item)=>(
+             <li>
+              {item.username}
+            </li>
+          ))} 
+        </ul>
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">
           <span className="topbarLink">Homepage</span>
-          <span className="topbarLink">Timeline</span>
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
@@ -34,9 +59,6 @@ export default function Topbar() {
           </div>
           <div className="topbarIconItem">
             <Chat />
-          </div>
-          <div className="topbarIconItem">
-            <Notifications />
           </div>
         </div>
         <Link 
