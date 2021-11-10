@@ -44,14 +44,14 @@ router.delete('/:id', async (req, res) => {
 
 //get a user
 router.get('/:id', async (req, res) => {
-  const userId = req.body.userId;
-  const username = req.body.username;
+  const userId = req.params.id;
+  //const username = req.body.username;
   console.log('user===', req);
 
   try {
     const user = (await User.findById(userId))
       ? await User.findById(userId)
-      : await User.findOne({ username: username });
+      : await User.findOne({ username: user.username });
     console.log('user===', user);
     const { password, updatedAt, ...other } = user._doc;
     res.status(200).json(other);

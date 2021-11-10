@@ -1,7 +1,7 @@
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
 
@@ -19,7 +19,11 @@ export default function Topbar({searchUserList, searchCall}) {
       searchCall(searchValue) 
     }
   }
-  console.log("target=====", searchUserList)
+
+  // useEffect(()=>{
+  //   setUserList(searchUserList)
+  // },[searchUserList])
+  // console.log("target=====", searchUserList)
 
   return (
     <div className="topbarContainer">
@@ -41,13 +45,7 @@ export default function Topbar({searchUserList, searchCall}) {
             className="searchInput"
           />
         </div>
-        <ul>
-          {searchUserList && searchUserList.data.map((item)=>(
-             <li>
-              {item.username}
-            </li>
-          ))} 
-        </ul>
+      
       </div>
       <div className="topbarRight">
         <div className="topbarLinks">

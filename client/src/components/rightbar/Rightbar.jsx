@@ -107,10 +107,7 @@ src="https://media.geeksforgeeks.org/wp-content/uploads/20210425122716/1-300x115
             <span className="rightbarInfoKey">Email:</span>
             <span className="rightbarInfoValue">{user.email}</span>
           </div>
-          <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">Description:</span>
-            <span className="rightbarInfoValue">{user.desc}</span>
-          </div>
+         
         </div>
         <h4 className="rightbarTitle">User friends</h4>
         <div className="rightbarFollowings">
