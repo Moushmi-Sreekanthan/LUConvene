@@ -10,7 +10,7 @@ export default function Corousal() {
         <Carousel.Item interval={1500}>
           <img
             className="d-block w-100"
-src="https://media.geeksforgeeks.org/wp-content/uploads/20210425122739/2-300x115.png"
+src="../../pics/1.PNG"
             alt="Image One"
           />
           <Carousel.Caption>
