@@ -10,6 +10,8 @@ const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
 const departmentRoute = require('./routes/departments');
 const eventRoute = require('./routes/events');
+const conversationRoute = require("./routes/conversations");
+const messageRoute = require("./routes/messages");
 const router = express.Router();
 const path = require('path');
 
@@ -34,6 +36,8 @@ app.use('/api/users', userRoute);
 app.use('/api/posts', postRoute);
 app.use('/api/department', departmentRoute);
 app.use('/api/event', eventRoute);
+app.use("/api/conversations", conversationRoute);
+app.use("/api/messages", messageRoute);
 
 app.listen(8800, () => {
   console.log('Backend server is running!');
