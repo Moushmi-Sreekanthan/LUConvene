@@ -53,6 +53,14 @@ export default function Rightbar({ user }) {
     }
   };
 
+  const onClickUser = async (userId) => {
+      const res = await axios.get(`/users/${userId}`);
+      console.log("data=>>>", res.data);
+     // setUser(res.data);
+     
+  }
+  
+
   const HomeRightbar = () => {
     return (
       <>
@@ -112,23 +120,23 @@ src="https://media.geeksforgeeks.org/wp-content/uploads/20210425122716/1-300x115
         <h4 className="rightbarTitle">User friends</h4>
         <div className="rightbarFollowings">
           {friends.map((friend) => (
-            <Link
-              to={"/profile/" + friend.username}
-              style={{ textDecoration: "none" }}
-            >
-              <div className="rightbarFollowing">
+            // <Link
+            //   to={`/profile/${friend.username}`}
+            //   style={{ textDecoration: "none" }}
+            // >
+              <div className="rightbarFollowing" onClick={() => onClickUser(friend._id)}>
                 <img
                   src={
                     friend.profilePicture
                       ? PF + friend.profilePicture
-                      : PF + "person/noAvatar.png"
+                      : "/assets/person/noAvatar.png"
                   }
                   alt=""
                   className="rightbarFollowingImg"
                 />
                 <span className="rightbarFollowingName">{friend.username}</span>
               </div>
-            </Link>
+           // </Link>
           ))}
         </div>
       </>

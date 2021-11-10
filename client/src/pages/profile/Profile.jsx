@@ -13,16 +13,16 @@ export default function Profile() {
   const { user } = useContext(AuthContext);
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  // const [user, setUser] = useState(useContext(AuthContext));
-  // const username = useParams().username;
-// console.log("useParams===",useParams());
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const res = await axios.get(`/users/${user._id}`);
-  //     setUser(res.data);
-  //   };
-  //   fetchUser();
-  // }, [username]);
+  const [user, setUser] = useState(useContext(AuthContext));
+  const username = useParams().username;
+console.log("useParams===",useParams());
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await axios.get(`/users/${user._id}`);
+      setUser(res.data);
+    };
+    fetchUser();
+  }, [username]);
 
   return (
     <>

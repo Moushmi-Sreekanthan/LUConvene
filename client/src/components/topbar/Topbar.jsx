@@ -20,6 +20,11 @@ export default function Topbar({searchUserList, searchCall}) {
     }
   }
 
+  const logout = () => {
+    localStorage.clear();
+    window.location.href = '/login';
+}
+
   // useEffect(()=>{
   //   setUserList(searchUserList)
   // },[searchUserList])
@@ -48,8 +53,8 @@ export default function Topbar({searchUserList, searchCall}) {
       
       </div>
       <div className="topbarRight">
-        <div className="topbarLinks">
-          <span className="topbarLink">Homepage</span>
+        <div className="topbarLinks" onClick={()=>logout()}>
+          <span className="topbarLink">Logout</span>
         </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">

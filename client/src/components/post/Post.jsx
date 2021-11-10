@@ -15,12 +15,12 @@ export default function Post({ post }) {
 
   console.log("currentUser",currentUser);
   useEffect(() => {
-    setIsLiked(post.likes.includes(currentUser._id));
-  }, [currentUser._id, post.likes]);
+    setIsLiked(post.likes.includes(user._id));
+  }, [user._id, post.likes]);
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`/users?userId=${post.userId}`);
+      const res = await axios.get(`/users/${post.userId}`);
       setUser(res.data);
     };
     fetchUser();
@@ -28,7 +28,7 @@ export default function Post({ post }) {
 
   const likeHandler = () => {
     try {
-      axios.put("/posts/" + post._id + "/like", { userId: currentUser._id });
+      axios.put("/posts/" + post._id + "/like", { userId: user._id });
     } catch (err) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
@@ -38,14 +38,14 @@ export default function Post({ post }) {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`/profile/${currentUser.username}`}>
+            <Link to={`/profile/${user.username}`}>
               <img
                 className="postProfileImg"
-                src={currentUser.profilePicture? currentUser.profilePicture : '/assets/person/noAvatar.png'}
+                src={user.profilePicture? user.profilePicture : '/assets/person/noAvatar.png'}
                 // alt={'/assets/person/noAvatar.png'}
               />
             </Link>
-            <span className="postUsername">{currentUser.username}</span>
+            <span className="postUsername">{user.username}</span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">

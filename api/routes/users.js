@@ -45,7 +45,7 @@ router.delete('/:id', async (req, res) => {
 //get a user
 router.get('/:id', async (req, res) => {
   const userId = req.params.id;
-  //const username = req.body.username;
+  const username = req.body.username;
   console.log('user===', req);
 
   try {
@@ -60,25 +60,36 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-//get friends
-router.get('/friends/:userId', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-    const user = await User.findById(req.body.userId);
-    const friends = await Promise.all(
-      user.followings.map((friendId) => {
-        return User.findById(friendId);
-      })
-    );
-    let friendList = [];
-    friends.map((friend) => {
-      const { _id, username, profilePicture } = friend;
-      friendList.push({ _id, username, profilePicture });
-    });
-    res.status(200).json(friendList);
+    const post = await Post.findById(req.params.id);
+    res.status(200).json(post);
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
+
+
+//get friends
+  router.get("/friends/:userId", async (req, res) => {
+    try {
+      const user = await User.findById(req.params.userId);
+      const friends = await Promise.all(
+        user.followings.map((friendId) => {
+          return User.findById(friendId);
+        })
+      );
+      let friendList = [];
+      friends.map((friend) => {
+        const { _id, username, profilePicture } = friend;
+        friendList.push({ _id, username, profilePicture });
+      });
+      res.status(200).json(friendList)
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  });
 
 //follow a user
 
