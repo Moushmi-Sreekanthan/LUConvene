@@ -1,5 +1,5 @@
 import axios from "axios"; 
-import {SEARCH_START, SEARCH_SUCCESS, SEARCH_FAILURE} from '../constants/searchUser.constant';
+import {SEARCH_START, SEARCH_SUCCESS, SEARCH_FAILURE} from '../constants/constant';
 
 export const searchUser =(searchQuery)=> dispatch => {
 

@@ -13,6 +13,7 @@ export default function Post({ post }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { user: currentUser } = useContext(AuthContext);
 
+  console.log("currentUser",currentUser);
   useEffect(() => {
     setIsLiked(post.likes.includes(currentUser._id));
   }, [currentUser._id, post.likes]);
@@ -37,14 +38,14 @@ export default function Post({ post }) {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`/profile/${user.username}`}>
+            <Link to={`/profile/${currentUser.username}`}>
               <img
                 className="postProfileImg"
-                src="person/noAvatar.png"
-                alt=""
+                src={currentUser.profilePicture? currentUser.profilePicture : '/assets/person/noAvatar.png'}
+                // alt={'/assets/person/noAvatar.png'}
               />
             </Link>
-            <span className="postUsername">{user.username}</span>
+            <span className="postUsername">{currentUser.username}</span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
