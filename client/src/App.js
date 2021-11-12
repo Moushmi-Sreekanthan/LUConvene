@@ -27,7 +27,7 @@ function App() {
         <Route path="/messenger">
           {!user ? <Redirect to="/" /> : <Messenger />}
         </Route>
-        <Route path="/profile/:username">
+        <Route path="/profile/:userId/:username">
           <Profile />
         </Route>
       </Switch>
