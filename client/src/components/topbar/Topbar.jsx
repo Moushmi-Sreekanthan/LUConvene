@@ -3,12 +3,16 @@ import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { useHistory } from "react-router";
 
 
 export default function Topbar({searchUserList, searchCall}) {
+  const history = useHistory();
 
   const [searchValue, setSearchValue] = useState('');
+  const [userList, setUserList] = useState([]);
 
+  console.log("userList==", userList);
   const { user } = useContext(AuthContext);
   // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -25,10 +29,14 @@ export default function Topbar({searchUserList, searchCall}) {
     window.location.href = '/login';
 }
 
-  // useEffect(()=>{
-  //   setUserList(searchUserList)
-  // },[searchUserList])
-  // console.log("target=====", searchUserList)
+const onClickChat = () =>{
+  history.push("/messenger");
+}
+
+  useEffect(()=>{
+    setUserList(searchUserList)
+  },[searchUserList])
+  console.log("target=====", searchUserList)
 
   return (
     <div className="topbarContainer">
@@ -60,12 +68,12 @@ export default function Topbar({searchUserList, searchCall}) {
           <div className="topbarIconItem">
             <Person />
           </div>
-          <div className="topbarIconItem">
+          <div className="topbarIconItem" onClick={() => onClickChat()}>
             <Chat />
           </div>
         </div>
         <Link 
-        to={`/profile/${user.username}`}
+        to={`/profile/${user._id}/${user.username}`}
         >
           <img
             src="/assets/person/noAvatar.png"

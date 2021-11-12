@@ -7,6 +7,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@material-ui/icons";
 import 'bootstrap/dist/css/bootstrap.css';
 import Carousel from 'react-bootstrap/Carousel';
+import { useHistory } from "react-router";
 
 let items = [
   {src:"assets/ad.png",desc:"Slide1"},
@@ -15,14 +16,18 @@ let items = [
 ]
 
 export default function Rightbar({ user }) {
+  const history = useHistory();
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  const [followed, setFollowed] = useState(
-    currentUser.followings.includes(user?.id)
-  );
+  const state = currentUser.followings.includes(user?._id)
+  const [followed, setFollowed] = useState(state);
+
+  console.log("rightbar==", user?user.username:null, state)
 
   useEffect(() => {
+    setFollowed(state)
     const getFriends = async () => {
       try {
         const friendList = await axios.get("/users/friends/" + user._id);
@@ -35,6 +40,7 @@ export default function Rightbar({ user }) {
   }, [user]);
 
   const handleClick = async () => {
+    console.log("handleClick called");
     try {
       if (followed) {
         await axios.put(`/users/${user._id}/unfollow`, {
@@ -55,9 +61,19 @@ export default function Rightbar({ user }) {
 
   const onClickUser = async (userId) => {
       const res = await axios.get(`/users/${userId}`);
-      console.log("data=>>>", res.data);
+      console.log("data=>>>", res.data.username);
+
+      window.location.href = `/profile/${res.data._id}/${res.data.username}`;
+
+      //history.push(`/profile/${res.data.username}`);
+
      // setUser(res.data);
-     
+    //  <Link 
+    //     to={`/profile/${user.username}`}
+    //     >
+
+    //     </Link>
+
   }
   
 
@@ -97,6 +113,7 @@ src="https://media.geeksforgeeks.org/wp-content/uploads/20210425122716/1-300x115
   };
 
   const ProfileRightbar = () => {
+    console.log("followed==",followed);
     return (
       <>
         {user.username !== currentUser.username && (
@@ -105,6 +122,7 @@ src="https://media.geeksforgeeks.org/wp-content/uploads/20210425122716/1-300x115
             {followed ? <Remove /> : <Add />}
           </button>
         )}
+        
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
         <div className="rightbarInfoItem">
