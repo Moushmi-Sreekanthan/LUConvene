@@ -37,8 +37,8 @@ export default function Messenger(){
 
    useEffect(()=>{
        socket.current.emit("addUser", user._id);
-        socket.current.on("getUsers", users=>{
-            setOnlineUsers(user.followings.filter(f=>users.some(u=>u.userId===f)));
+        socket.current.on("getUsers", (users)=>{
+            setOnlineUsers(user.followings.filter((f)=>users.some((u)=>u.userId===f)));
         });
    },[user]);
 
@@ -67,7 +67,7 @@ export default function Messenger(){
         getMessages();
     }, [currentChat]);
 
-    const handleSubmit = (e)=>{
+    const handleSubmit = async (e)=>{
         e.preventDefault();
         const message = {
             sender: user._id,
@@ -84,7 +84,7 @@ export default function Messenger(){
         });
 
         try{
-            const res = axios.post("/messages", message);
+            const res = await axios.post("/messages", message);
             setMessages([...messages, res.data]);
             setNewMessage("");
         }catch(err){
@@ -115,26 +115,27 @@ export default function Messenger(){
                 </div>
                 <div className="chatBox">
                     <div className="chatBoxWrapper">
-                        {
-                            currentChat ? 
-                            <>
                         <div className="chatBoxTop">
-                            {messages.map((m)=>(
-                                <div ref={scrollRef}>
+                        {
+                            currentChat ? (
+                            <>
+                            {messages.map((m,index)=>(
+                                <div ref={scrollRef} key={index}>
                                 <Message message={m} own={m.sender === user._id} />
                                 </div>
                                 ))}
     
+                      
+                            <div className="chatBoxBottom">
+                                <textarea 
+                                className="chatMessageInput" 
+                                placeholder="write something..." 
+                                onChange={(e)=>setNewMessage(e.target.value)}
+                                value={newMessage}
+                                />
+                                <button className="chatSubmitButton" onClick={handleSubmit}>Send</button>
+                            </div> </> ) : <span className="noConversationText"> Open conversation to start chat. </span>}
                         </div>
-                        <div className="chatBoxBottom">
-                            <textarea 
-                            className="chatMessageInput" 
-                            placeholder="write something..." 
-                            onChange={(e)=>setNewMessage(e.target.value)}
-                            value={newMessage}
-                            />
-                            <button className="chatSubmitButton" onClick={handleSubmit}>Send</button>
-                        </div> </> : <span className="noConversationText"> Open conversation to start chat. </span>}
                     </div>
                 </div>
                 <div className="chatOnline">
@@ -145,5 +146,5 @@ export default function Messenger(){
             </div>
             
         </>
-    )
+    );
 }
