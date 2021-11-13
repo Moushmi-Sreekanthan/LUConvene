@@ -1,101 +1,74 @@
-// import "./profile.css";
-// import Topbar from "../../components/topbar/Topbar";
-// import Sidebar from "../../components/sidebar/Sidebar";
-// import Rightbar from "../../components/rightbar/Rightbar";
-// import Feed from "../../components/feed/Feed";
-// import { useEffect, useState, useContext } from "react";
-// import axios from "axios";
-// import { useParams } from "react-router";
-// import { AuthContext } from "../../context/AuthContext";
-
-// export default function Profile({}) {
-//  // const { user } = useContext(AuthContext);
-
-//   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-//   const [user, setUser] = useState(useContext(AuthContext));
-//   const username = useParams().username;
-// console.log("useParams===",useParams());
-//   useEffect(() => {
-//     const fetchUser = async () => {
-//       const res = await axios.get(`/users/${user._id}`);
-//       setUser(res.data);
-//     };
-//     fetchUser();
-//   }, [username]);
-
-//   return (
-//     <>
-//       <Topbar />
-//       <div className="profile">
-//         <Sidebar />
-//         <div className="profileRight">
-//           <div className="profileRightTop">
-//             <div className="profileCover">
-//               <img
-//                 className="profileCoverImg"
-//                 src="/assets/person/noCover.png"
-//                 alt=""
-//               />
-//               <img
-//                 className="profileUserImg"
-//                 src="/assets/person/noAvatar.png"
-//                 alt=""
-//               />
-//             </div>
-//             <div className="profileInfo">
-//               <h4 className="profileInfoName">{user.username}</h4>
-//               <span className="profileInfoDesc">{user.desc}</span>
-//             </div>
-//           </div>
-//           <div className="profileRightBottom">
-//             <Feed username={user.username} />
-//             <Rightbar user={user} />
-//           </div>
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
-
 import "./profile.css";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
 import Modal from "../../components/modal/Modal";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useParams } from "react-router";
 import { PermMedia } from "@material-ui/icons";
+import { AuthContext } from "../../context/AuthContext";
+
 
 export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const { user: currentUser, dispatch } = useContext(AuthContext);
+
   const [user, setUser] = useState({});
   const [modal, setModal] = useState(false);
-  const [name, setName] = useState("");
-  const [modalInputName, setModalInputName] = useState("");
-  const [file, setFile] = useState(null);
+  const [imageName, setImageName] = useState("");
+  const [imageNameCover, setImageNameCover] = useState("");
+  const [modalUsername, setModalUsername] = useState("");
+  const [modalEmail, setModalEmail] = useState("");
+  const [modalDesc, setModalDesc] = useState("");
+  const [imageData, setImageData] = useState("");
+  const [coverImageData, setcoverImageData] = useState("");
+  const [userList, setUserList] = useState([]);
 
   const username = useParams().username;
   const userId = useParams().userId;
 
   useEffect(() => {
     const fetchUser = async () => {
+    console.log("fetchUser called...");
+
       const res = await axios.get(`/users/${userId}`);
       setUser(res.data);
     };
     fetchUser();
   }, [username]);
 
-  const handleChange = (e) => {
-    const target = e.target;
-    const name = target.name;
-    const value = target.value;
-    setName(value);
-  };
+  const handleSubmit = async (e) => {
+    console.log(
+      modalUsername,
+      modalEmail,
+      modalDesc,
+      imageName,
+      imageNameCover,
+      imageData,
+      coverImageData
+    );
 
-  const handleSubmit = (e) => {
-    setName(modalInputName);
+    try {
+      await axios.post("/upload", imageData);
+      await axios.post("/upload", coverImageData);
+      let response = await axios.put(`/users/${user._id}`, {
+        userId: user._id,
+        username: modalUsername ? modalUsername : user.username,
+        email: modalEmail ? modalEmail : user.email,
+        desc: modalDesc ? modalDesc : user.desc || "",
+        profilePicture: imageName ? imageName : user.profilePicture || "",
+        coverPicture: imageNameCover ? imageNameCover : user.coverPicture || "",
+      });
+      console.log("response", response);
+      const res = await axios.get(`/users/${user._id}`);
+      console.log("res", res);
+      localStorage.setItem("user", JSON.stringify(res.data))
+
+      window.location.reload();
+    } catch (err) {}
+
     modalClose();
   };
 
@@ -104,28 +77,37 @@ export default function Profile() {
   };
 
   const modalClose = () => {
-    setModalInputName("");
+    // setModalUsername(""),
+    // setModalEmail(""),
+    // setModalDesc(""),
+    // setImageName(""),
+    // setImageNameCover(""),
+    // setImageData(""),
+    // setcoverImageData("")
     setModal(false);
   };
 
-  const handleImageUpload = async (e) => {
-    // const [file] = e.target.files;
-    // setFile(e.target.files[0])
+  const handleImageUpload = async (e, type) => {
+    const [file] = e.target.files;
 
-    // const data = new FormData();
-    // const fileName = Date.now() + file.name;
-    // data.append("name", fileName);
-    // data.append("file", file);
-    // newPost.img = fileName;
-    // console.log(newPost);
-    // try {
-    //   await axios.post("/upload", data);
-    // } catch (err) {}
+    const data = new FormData();
+    const fileName = Date.now() + file.name;
+    data.append("name", fileName);
+    data.append("file", file);
+    console.log("data", data);
+
+    if (type === "profile") {
+      setImageName(fileName);
+      setImageData(data);
+    } else if (type === "cover") {
+      setImageNameCover(fileName);
+      setcoverImageData(data);
+    }
   };
 
   return (
     <>
-      <Topbar />
+      <Topbar setUserList={setUserList} />
       <div className="profile">
         <Sidebar />
         <div className="profileRight">
@@ -149,42 +131,81 @@ export default function Profile() {
                 }
                 alt=""
               />
-              <button className="updateButton" onClick={() => modalOpen()}>
-                Update Profile
-              </button>
+
+              {user.username === currentUser.username && (
+                <button className="updateButton" onClick={() => modalOpen()}>
+                  Update Profile
+                </button>
+              )}
 
               <Modal show={modal} handleClose={(e) => modalClose(e)}>
-                <h2>Update Profile</h2>
-                <div className="form-group">
+                <h2 className="modalTitle">Update Profile</h2>
+                <div className=".form-control">
                   <label>Username:</label>
                   <input
+                    placeholder="Enter Username"
                     type="text"
-                    value={modalInputName}
+                    value={modalUsername}
                     name="modalInputName"
-                    onChange={(e) => handleChange(e)}
+                    onChange={(event) => setModalUsername(event.target.value)}
                     className="form-control"
                   />
 
                   <label>Email:</label>
                   <input
+                    placeholder="Enter Email"
                     type="text"
-                    value={modalInputName}
+                    value={modalEmail}
                     name="modalInputName"
-                    onChange={(e) => handleChange(e)}
+                    onChange={(event) => setModalEmail(event.target.value)}
                     className="form-control"
                   />
 
-                  <label htmlFor="file" className="shareOption">
-                    <PermMedia htmlColor="tomato" className="shareIcon" />
-                    <span className="shareOptionText">{ "Photo or Video" }</span>
-                    <input
-                      style={{ display: "none" }}
-                      type="file"
-                      id="file"
-                      accept=".png,.jpeg,.jpg"
-                      onChange={handleImageUpload}
-                    />
-                  </label>
+                  <label>Description:</label>
+                  <input
+                    placeholder="Enter Description"
+                    type="text"
+                    value={modalDesc}
+                    name="modalInputName"
+                    onChange={(event) => setModalDesc(event.target.value)}
+                    className="form-control"
+                  />
+
+                  <div className="formPic">
+                    <label htmlFor="file" className="shareOption">
+                      <PermMedia htmlColor="tomato" className="shareOption" />
+                      <span className="shareOptionText">{imageName}</span>
+                      <span className="shareOptionText">
+                        {"Select Profile Picture"}
+                      </span>
+
+                      <input
+                        style={{ display: "none" }}
+                        type="file"
+                        id="file"
+                        accept=".png,.jpeg,.jpg"
+                        onChange={(e) => handleImageUpload(e, "profile")}
+                      />
+                    </label>
+                  </div>
+
+                  <div classNames="form-control">
+                    <label htmlFor="file1" className="shareOption">
+                      <PermMedia htmlColor="tomato" className="shareOption" />
+                      <span className="shareOptionText">{imageNameCover}</span>
+                      <span className="shareOptionText">
+                        {"Select Cover Picture"}
+                      </span>
+
+                      <input
+                        style={{ display: "none" }}
+                        type="file"
+                        id="file1"
+                        accept=".png,.jpeg,.jpg"
+                        onChange={(e) => handleImageUpload(e, "cover")}
+                      />
+                    </label>
+                  </div>
                 </div>
                 <div className="form-group">
                   <button onClick={(e) => handleSubmit(e)} type="button">

@@ -113,6 +113,9 @@ export default function Share() {
       const fileName = Date.now() + file.name;
       data.append("name", fileName);
       data.append("file", file);
+
+      console.log("data in share", data);
+
       newPost.img = fileName;
       console.log(newPost);
       try {

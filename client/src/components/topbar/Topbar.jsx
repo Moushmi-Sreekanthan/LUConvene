@@ -4,39 +4,50 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useHistory } from "react-router";
+import SearchBar from "../searchBar/SearchBar";
 
 
-export default function Topbar({searchUserList, searchCall}) {
+export default function Topbar({ searchUserList, searchCall }) {
   const history = useHistory();
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const [userList, setUserList] = useState([]);
+  // const [searchData, setSearchData] = useState([]);
 
-  console.log("userList==", userList);
   const { user } = useContext(AuthContext);
   // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const _handleKeyDown = async (e) => {
     //e.preventDefault();
-   console.log();
-    if (e.key === 'Enter') {
-      searchCall(searchValue) 
+    console.log();
+    if (e.key === "Enter") {
+      searchCall(searchValue);
     }
-  }
+  };
 
   const logout = () => {
     localStorage.clear();
-    window.location.href = '/login';
-}
+    window.location.href = "/login";
+  };
 
-const onClickChat = () =>{
-  history.push("/messenger");
-}
+  const onClickChat = () => {
+    history.push("/messenger");
+  };
 
-  useEffect(()=>{
-    setUserList(searchUserList)
-  },[searchUserList])
-  console.log("target=====", searchUserList)
+  useEffect(() => {
+    if(searchUserList && searchUserList.data){
+
+      setUserList(searchUserList.data);
+    }
+  }, [searchUserList]);
+
+  const itemClick = (userDetail) => {
+    // history.push(`/profile/${userDetail._id}/${userDetail.username}`);
+
+  };
+
+  console.log("searchUserList=====>", searchUserList);
 
   return (
     <div className="topbarContainer">
@@ -51,17 +62,39 @@ const onClickChat = () =>{
           <input
             type="text"
             value={searchValue}
-            // onChange={e => setSearch(e.target.value)}
             onKeyDown={_handleKeyDown}
             onChange={(e) => setSearchValue(e.target.value)}
             placeholder="Search for friend"
             className="searchInput"
           />
         </div>
-      
       </div>
+      {userList.length > 0 && (
+        <div className="searchList">
+          <ul className="userlist">
+            {userList.map((item) => (
+               <Link to={`/profile/${item._id}/${item.username}`}>
+              <li>
+                <div className="userListItem">
+                  <img
+                    src={
+                      user.profilePicture
+                        ? PF + user.profilePicture
+                        : PF + "person/noAvatar.png"
+                    }
+                    alt=""
+                    className="topbarImg"
+                  />
+                 <span className="userName"> {item.username} </span>
+                </div>
+              </li>
+              </Link>
+            ))}
+          </ul>
+        </div>
+      )}
       <div className="topbarRight">
-        <div className="topbarLinks" onClick={()=>logout()}>
+        <div className="topbarLinks" onClick={() => logout()}>
           <span className="topbarLink">Logout</span>
         </div>
         <div className="topbarIcons">
@@ -72,15 +105,18 @@ const onClickChat = () =>{
             <Chat />
           </div>
         </div>
-        <Link 
-        to={`/profile/${user._id}/${user.username}`}
-        >
+        <Link to={`/profile/${user._id}/${user.username}`}>
           <img
-            src="/assets/person/noAvatar.png"
+            src={
+              user.profilePicture
+                ? PF + user.profilePicture
+                : PF + "person/noAvatar.png"
+            }
             alt=""
             className="topbarImg"
           />
         </Link>
+        <span className="userName">{user.username}</span>
       </div>
     </div>
   );

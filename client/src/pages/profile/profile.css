@@ -75,3 +75,20 @@
   top: 10%;
   padding: 20px;
 }
+
+.modalTitle{
+  text-align: center;
+}
+
+.form-control{
+  margin-bottom: 10px;
+}
+
+.form-group{
+  margin-bottom: 15px;
+  text-align: center;
+}
+.formPic{
+  margin-bottom: 10px;
+
+}

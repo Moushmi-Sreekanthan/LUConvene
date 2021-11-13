@@ -11,6 +11,11 @@ export const LoginFailure = () => ({
   type: "LOGIN_FAILURE",
 });
 
+export const UpdateUser = (UserDetails) => ({
+  type: "UPDATE_USER",
+  payload: UserDetails,
+});
+
 export const Follow = (userId) => ({
   type: "FOLLOW",
   payload: userId,
