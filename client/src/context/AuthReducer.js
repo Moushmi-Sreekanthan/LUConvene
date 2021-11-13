@@ -36,6 +36,17 @@ const AuthReducer = (state, action) => {
           ),
         },
       };
+
+      case "UPDATE_USER":
+        return{
+          ...state,
+          user: {
+            ...state.user,
+            followings: state.user.followings.filter(
+              (following) => following !== action.payload
+            ),
+          },
+        }
       case "SEARCH_START":
       return {
         user: null,

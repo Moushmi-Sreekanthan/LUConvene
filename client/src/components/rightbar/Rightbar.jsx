@@ -24,8 +24,6 @@ export default function Rightbar({ user }) {
   const state = currentUser.followings.includes(user?._id)
   const [followed, setFollowed] = useState(state);
 
-  console.log("rightbar==", user?user.username:null, state)
-
   useEffect(() => {
     setFollowed(state)
     const getFriends = async () => {
@@ -86,7 +84,7 @@ export default function Rightbar({ user }) {
         <Carousel.Item interval={1500}>
           <img
             className="d-block w-100"
-src="https://media.geeksforgeeks.org/wp-content/uploads/20210425122739/2-300x115.png"
+src="assets/ad.png"
             alt="Image One"
           />
           <Carousel.Caption>
@@ -97,7 +95,7 @@ src="https://media.geeksforgeeks.org/wp-content/uploads/20210425122739/2-300x115
         <Carousel.Item interval={500}>
           <img
             className="d-block w-100"
-src="https://media.geeksforgeeks.org/wp-content/uploads/20210425122716/1-300x115.png"
+src="assets/post/ad.png"
             alt="Image Two"
           />
           <Carousel.Caption>
@@ -113,7 +111,6 @@ src="https://media.geeksforgeeks.org/wp-content/uploads/20210425122716/1-300x115
   };
 
   const ProfileRightbar = () => {
-    console.log("followed==",followed);
     return (
       <>
         {user.username !== currentUser.username && (

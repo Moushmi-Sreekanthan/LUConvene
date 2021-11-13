@@ -94,3 +94,41 @@
   object-fit: cover;
   cursor: pointer;
 }
+
+.userName{
+  margin-left: -100px;
+}
+
+.searchList{
+  position: absolute;
+  transform: translate(-50%, 53.2%);
+  left: 50%;
+  background: #0000004a;
+  width: 100%;
+  height: 100vh;
+}
+
+.searchList ul{
+  transform: translate(50%, 0%);
+  background: white;
+  width: 50%;
+  max-height: 50%;
+  list-style-type: none ;
+  overflow-y: scroll;
+
+}
+
+.searchList ul li{
+  padding: 5px 10px;
+}
+
+.userListItem{
+  display: flex;
+  /* justify-content: flex-start; */
+}
+
+.userName{
+  margin: 5px 10px;
+}
+
+
