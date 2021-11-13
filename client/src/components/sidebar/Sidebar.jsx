@@ -47,8 +47,17 @@ import {
 } from "@material-ui/icons";
 import { Users } from "../../dummyData";
 import CloseFriend from "../closeFriend/CloseFriend";
+import { useHistory } from "react-router";
+
+
 
 export default function Sidebar() {
+
+  const history = useHistory();
+
+  const onClickEvents = () =>{
+    history.push("./eveents/Events");
+  }
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -62,12 +71,12 @@ export default function Sidebar() {
             <span className="sidebarListItemText">Chats</span>
           </li>
          
-        
+          <div className="sidebarIconItem" onClick={() => onClickEvents()}>
           <li className="sidebarListItem">
             <Event className="sidebarIcon" />
             <span className="sidebarListItemText">Events</span>
           </li>
-        
+        </div>
         </ul>
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
