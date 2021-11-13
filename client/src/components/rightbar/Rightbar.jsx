@@ -84,7 +84,7 @@ export default function Rightbar({ user }) {
         <Carousel.Item interval={1500}>
           <img
             className="d-block w-100"
-src="assets/ad.png"
+src="assets/images/1.PNG"
             alt="Image One"
           />
           <Carousel.Caption>
@@ -95,7 +95,73 @@ src="assets/ad.png"
         <Carousel.Item interval={500}>
           <img
             className="d-block w-100"
-src="assets/post/ad.png"
+src="assets/images/2.PNG"
+            alt="Image Two"
+          />
+          <Carousel.Caption>
+            <h3>Label for second slide</h3>
+            <p>Sample Text for Image Two</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item interval={500}>
+          <img
+            className="d-block w-100"
+src="assets/images/3.PNG"
+            alt="Image Two"
+          />
+          <Carousel.Caption>
+            <h3>Label for second slide</h3>
+            <p>Sample Text for Image Two</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item interval={500}>
+          <img
+            className="d-block w-100"
+src="assets/images/4.PNG"
+            alt="Image Two"
+          />
+          <Carousel.Caption>
+            <h3>Label for second slide</h3>
+            <p>Sample Text for Image Two</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item interval={500}>
+          <img
+            className="d-block w-100"
+src="assets/images/5.PNG"
+            alt="Image Two"
+          />
+          <Carousel.Caption>
+            <h3>Label for second slide</h3>
+            <p>Sample Text for Image Two</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item interval={500}>
+          <img
+            className="d-block w-100"
+src="assets/images/6.PNG"
+            alt="Image Two"
+          />
+          <Carousel.Caption>
+            <h3>Label for second slide</h3>
+            <p>Sample Text for Image Two</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item interval={500}>
+          <img
+            className="d-block w-100"
+src="assets/images/7.PNG"
+            alt="Image Two"
+          />
+          <Carousel.Caption>
+            <h3>Label for second slide</h3>
+            <p>Sample Text for Image Two</p>
+          </Carousel.Caption>
+        </Carousel.Item>
+        <Carousel.Item interval={500}>
+          <img
+            className="d-block w-100"
+src="assets/images/8.PNG"
             alt="Image Two"
           />
           <Carousel.Caption>
