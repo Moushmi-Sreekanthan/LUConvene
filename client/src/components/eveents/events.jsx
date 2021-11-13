@@ -3,10 +3,23 @@ import "./events.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
+import Collapsible from 'react-collapsible';
 
 export default function Event() {
   return (
     <div style={{ display: 'block', width: 900, padding: 30 }}>
+     <Collapsible trigger="Start here">
+      <p>
+        This is the collapsible content. It can be any element or React
+        component you like.
+      </p>
+      <p>
+        It can even be another Collapsible component. Check out the next
+        section!
+      </p>
+    </Collapsible>
+     
+     
      <Dropdown >
     <Dropdown.Toggle id="dropdown-button-dark-example1" variant="danger">
     Educators' Career Fair on Nov. 9
