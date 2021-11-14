@@ -57,7 +57,7 @@
 }
 
 .topbarLink {
-  margin-right: 10px;
+  /* margin-right: 10px; */
   font-size: 14px;
   cursor: pointer;
 }
@@ -97,6 +97,7 @@
 
 .userName{
   margin-left: -100px;
+  color: black;
 }
 
 .searchList{
@@ -124,6 +125,9 @@
 
 .userListItem{
   display: flex;
+  margin-left: -20px;
+  width: 200px;
+
   /* justify-content: flex-start; */
 }
 
@@ -131,4 +135,17 @@
   margin: 5px 10px;
 }
 
+.closeBtn{
+  margin-left: 150px;
+}
+
+.userlist{
+  width: 200px;
+  border-radius: 5px;
+}
+
+.userNameTop{
+  color: white;
+  margin-left: -120px;
+}
 
