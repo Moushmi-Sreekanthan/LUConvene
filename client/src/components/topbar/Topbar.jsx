@@ -11,9 +11,12 @@ export default function Topbar({ searchUserList, searchCall }) {
 
   const [searchValue, setSearchValue] = useState("");
   const [userList, setUserList] = useState([]);
+  const [showSearch, setShowSearch] = useState(false);
+
   const { user } = useContext(AuthContext);
 
   const _handleKeyDown = async (e) => {
+    setShowSearch(true);
     console.log();
     if (e.key === "Enter") {
       searchCall(searchValue);
@@ -29,6 +32,20 @@ export default function Topbar({ searchUserList, searchCall }) {
     setUserList([]);
     history.push("/messenger");
   };
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      console.log(searchValue.length);
+      if (searchValue.length > 0) {
+        searchCall(searchValue);
+        setShowSearch(true);
+      } else {
+        setShowSearch(false);
+      }
+    }, 1000);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchValue]);
 
   useEffect(() => {
     if (searchUserList && searchUserList.data) {
@@ -55,7 +72,7 @@ export default function Topbar({ searchUserList, searchCall }) {
           <input
             type="text"
             value={searchValue}
-            onKeyDown={_handleKeyDown}
+            // onKeyDown={_handleKeyDown}
             onChange={(e) => setSearchValue(e.target.value)}
             placeholder="Search for friend"
             className="searchInput"
@@ -67,11 +84,15 @@ export default function Topbar({ searchUserList, searchCall }) {
           />
         </div>
       </div>
-      {userList.length > 0 && (
+      {userList.length > 0 && showSearch && (
         <div className="searchList">
           <ul className="userlist">
             {userList.map((item) => (
               <Link
+                onClick={() => {
+                  setUserList([]);
+                  setShowSearch(false);
+                }}
                 to={`/profile/${item._id}/${item.username}`}
                 style={{ textDecoration: "none" }}
               >
