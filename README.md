@@ -1,4 +1,4 @@
-# LU-CONVENEE
+# LUConvene
 
 
 ----> start server:
@@ -12,4 +12,10 @@ npm run start
 open another terminal
 cd/client
 npm run start
+
+----> start socket
+
+npm init
+npm add nodemon socket.io
+npm start
 

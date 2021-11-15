@@ -5,15 +5,15 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@material-ui/icons";
-import 'bootstrap/dist/css/bootstrap.css';
-import Carousel from 'react-bootstrap/Carousel';
+import "bootstrap/dist/css/bootstrap.css";
+import Carousel from "react-bootstrap/Carousel";
 import { useHistory } from "react-router";
 
 let items = [
-  {src:"assets/ad.png",desc:"Slide1"},
-  {src:"assets/ad.png",desc:"Slide2"},
-  {src:"assets/ad.png",desc:"Slide3"},
-]
+  { src: "assets/ad.png", desc: "Slide1" },
+  { src: "assets/ad.png", desc: "Slide2" },
+  { src: "assets/ad.png", desc: "Slide3" },
+];
 
 export default function Rightbar({ user }) {
   const history = useHistory();
@@ -21,11 +21,11 @@ export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [friends, setFriends] = useState([]);
   const { user: currentUser, dispatch } = useContext(AuthContext);
-  const state = currentUser.followings.includes(user?._id)
+  const state = currentUser.followings.includes(user?._id);
   const [followed, setFollowed] = useState(state);
 
   useEffect(() => {
-    setFollowed(state)
+    setFollowed(state);
     const getFriends = async () => {
       try {
         const friendList = await axios.get("/users/friends/" + user._id);
@@ -52,126 +52,88 @@ export default function Rightbar({ user }) {
         dispatch({ type: "FOLLOW", payload: user._id });
       }
       setFollowed(!followed);
-    } catch (err) {
-      
-    }
+    } catch (err) {}
   };
 
   const onClickUser = async (userId) => {
-      const res = await axios.get(`/users/${userId}`);
-      console.log("data=>>>", res.data.username);
+    const res = await axios.get(`/users/${userId}`);
+    console.log("data=>>>", res.data.username);
 
-      window.location.href = `/profile/${res.data._id}/${res.data.username}`;
+    window.location.href = `/profile/${res.data._id}/${res.data.username}`;
 
-      //history.push(`/profile/${res.data.username}`);
+    //history.push(`/profile/${res.data.username}`);
 
-     // setUser(res.data);
-    //  <Link 
+    // setUser(res.data);
+    //  <Link
     //     to={`/profile/${user.username}`}
     //     >
 
     //     </Link>
-
-  }
-  
+  };
 
   const HomeRightbar = () => {
     return (
       <>
-          <div style={{ display: 'block', width: 500, padding: 30, height: 500 }}>
-      
-      <Carousel>
-        <Carousel.Item interval={1500}>
-          <img
-            className="d-block w-100"
-src="assets/images/1.PNG"
-            alt="Image One"
-          />
-          <Carousel.Caption>
-            <h3>Label for first slide</h3>
-            <p>Sample Text for Image One</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item interval={500}>
-          <img
-            className="d-block w-100"
-src="assets/images/2.PNG"
-            alt="Image Two"
-          />
-          <Carousel.Caption>
-            <h3>Label for second slide</h3>
-            <p>Sample Text for Image Two</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item interval={500}>
-          <img
-            className="d-block w-100"
-src="assets/images/3.PNG"
-            alt="Image Two"
-          />
-          <Carousel.Caption>
-            <h3>Label for second slide</h3>
-            <p>Sample Text for Image Two</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item interval={500}>
-          <img
-            className="d-block w-100"
-src="assets/images/4.PNG"
-            alt="Image Two"
-          />
-          <Carousel.Caption>
-            <h3>Label for second slide</h3>
-            <p>Sample Text for Image Two</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item interval={500}>
-          <img
-            className="d-block w-100"
-src="assets/images/5.PNG"
-            alt="Image Two"
-          />
-          <Carousel.Caption>
-            <h3>Label for second slide</h3>
-            <p>Sample Text for Image Two</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item interval={500}>
-          <img
-            className="d-block w-100"
-src="assets/images/6.PNG"
-            alt="Image Two"
-          />
-          <Carousel.Caption>
-            <h3>Label for second slide</h3>
-            <p>Sample Text for Image Two</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item interval={500}>
-          <img
-            className="d-block w-100"
-src="assets/images/7.PNG"
-            alt="Image Two"
-          />
-          <Carousel.Caption>
-            <h3>Label for second slide</h3>
-            <p>Sample Text for Image Two</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item interval={500}>
-          <img
-            className="d-block w-100"
-src="assets/images/8.PNG"
-            alt="Image Two"
-          />
-          <Carousel.Caption>
-            <h3>Label for second slide</h3>
-            <p>Sample Text for Image Two</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
-    </div>
-        
+        <div style={{ display: "block", width: 500, padding: 30, height: 500 }}>
+          <Carousel>
+            <Carousel.Item interval={3000}>
+              <img
+                className="d-block w-100"
+                src="assets/images/1.PNG"
+                alt="Image "
+              />
+            </Carousel.Item>
+            <Carousel.Item interval={3000}>
+              <img
+                className="d-block w-100"
+                src="assets/images/2.PNG"
+                alt="Image "
+              />
+            </Carousel.Item>
+            <Carousel.Item interval={3000}>
+              <img
+                className="d-block w-100"
+                src="assets/images/3.PNG"
+                alt="Image "
+              />
+            </Carousel.Item>
+            <Carousel.Item interval={3000}>
+              <img
+                className="d-block w-100"
+                src="assets/images/ca.jpeg"
+                alt="Image "
+              />
+            </Carousel.Item>
+            <Carousel.Item interval={3000}>
+              <img
+                className="d-block w-100"
+                src="assets/images/jc.jpg"
+                alt="Image "
+              />
+            </Carousel.Item>
+            <Carousel.Item interval={3000}>
+              <img
+                className="d-block w-100"
+                src="assets/images/6.PNG"
+                alt="Image "
+              />
+            </Carousel.Item>
+            <Carousel.Item interval={3000}>
+              <img
+                className="d-block w-100"
+                src="assets/images/7.PNG"
+                alt="Image "
+              />
+            </Carousel.Item>
+            <Carousel.Item interval={3000}>
+              <img
+                className="d-block w-100"
+                src="assets/images/8.PNG"
+                alt="Image "
+              />
+            </Carousel.Item>
+          </Carousel>
+        </div>
       </>
     );
   };
@@ -185,10 +147,10 @@ src="assets/images/8.PNG"
             {followed ? <Remove /> : <Add />}
           </button>
         )}
-        
+
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
-        <div className="rightbarInfoItem">
+          <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">Username:</span>
             <span className="rightbarInfoValue">{user.username}</span>
           </div>
@@ -196,7 +158,6 @@ src="assets/images/8.PNG"
             <span className="rightbarInfoKey">Email:</span>
             <span className="rightbarInfoValue">{user.email}</span>
           </div>
-         
         </div>
         <h4 className="rightbarTitle">User friends</h4>
         <div className="rightbarFollowings">
@@ -205,19 +166,22 @@ src="assets/images/8.PNG"
             //   to={`/profile/${friend.username}`}
             //   style={{ textDecoration: "none" }}
             // >
-              <div className="rightbarFollowing" onClick={() => onClickUser(friend._id)}>
-                <img
-                  src={
-                    friend.profilePicture
-                      ? PF + friend.profilePicture
-                      : "/assets/person/noAvatar.png"
-                  }
-                  alt=""
-                  className="rightbarFollowingImg"
-                />
-                <span className="rightbarFollowingName">{friend.username}</span>
-              </div>
-           // </Link>
+            <div
+              className="rightbarFollowing"
+              onClick={() => onClickUser(friend._id)}
+            >
+              <img
+                src={
+                  friend.profilePicture
+                    ? PF + friend.profilePicture
+                    : "/assets/person/noAvatar.png"
+                }
+                alt=""
+                className="rightbarFollowingImg"
+              />
+              <span className="rightbarFollowingName">{friend.username}</span>
+            </div>
+            // </Link>
           ))}
         </div>
       </>

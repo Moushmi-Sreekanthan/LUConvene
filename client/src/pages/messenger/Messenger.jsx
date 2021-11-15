@@ -1,5 +1,5 @@
 import "./messenger.css"
-import Topbar from "../../components/topbar/Topbar"
+import Topbar from "../../components/topbar"
 import Conversation from "../../components/conversation/Conversation"
 import Message from "../../components/message/Message"
 import ChatOnline from "../../components/chatOnline/ChatOnline"
@@ -97,6 +97,8 @@ export default function Messenger(){
         scrollRef.current?.scrollIntoView({behavior:"smooth"});
     }, [messages]);
 
+    console.log("messages", conversations);
+
     return(
         <>
             <Topbar />
@@ -121,10 +123,9 @@ export default function Messenger(){
                             <>
                             {messages.map((m,index)=>(
                                 <div ref={scrollRef} key={index}>
-                                <Message message={m} own={m.sender === user._id} />
+                                <Message message={m} own={m.sender === user._id} user={user} />
                                 </div>
                                 ))}
-    
                       
                             <div className="chatBoxBottom">
                                 <textarea 

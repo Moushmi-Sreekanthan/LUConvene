@@ -23,7 +23,7 @@ export default function Login() {
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Lu-Convene</h3>
+          <h3 className="loginLogo">LuConvene</h3>
           <span className="loginDesc">
           Connect with your friends and students of Lamar University.
           </span>

@@ -1,5 +1,5 @@
 import "./profile.css";
-import Topbar from "../../components/topbar/Topbar";
+import Topbar from "../../components/topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Feed from "../../components/feed/Feed";
 import Rightbar from "../../components/rightbar/Rightbar";
@@ -109,7 +109,7 @@ export default function Profile() {
     <>
       <Topbar setUserList={setUserList} />
       <div className="profile">
-        <Sidebar />
+        <Sidebar user={currentUser}/>
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useHistory } from "react-router";
-import SearchBar from "../searchBar/SearchBar";
 
 export default function Topbar({ searchUserList, searchCall }) {
   const history = useHistory();
@@ -12,13 +11,9 @@ export default function Topbar({ searchUserList, searchCall }) {
 
   const [searchValue, setSearchValue] = useState("");
   const [userList, setUserList] = useState([]);
-  // const [searchData, setSearchData] = useState([]);
-
   const { user } = useContext(AuthContext);
-  // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const _handleKeyDown = async (e) => {
-    //e.preventDefault();
     console.log();
     if (e.key === "Enter") {
       searchCall(searchValue);
@@ -100,9 +95,7 @@ export default function Topbar({ searchUserList, searchCall }) {
         </div>
       )}
       <div className="topbarRight">
-      
         <div className="topbarIcons">
-         
           <div className="topbarIconItem" onClick={() => onClickChat()}>
             <Chat />
           </div>
