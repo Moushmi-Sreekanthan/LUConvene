@@ -21,12 +21,7 @@ export default function ChatOnline({onlineUsers, currentId, setCurrentChat}) {
     },[friends, onlineUsers]);
 
     const handleClick = async (user) =>{
-        try{
-            const res = await axios.get(`/conversations/find/${currentId}/${user._is}`);
-            setCurrentChat(res.data);
-        }catch(err){
-            console.log(err);
-        }
+      
     };
 
     return (

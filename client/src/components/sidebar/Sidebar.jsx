@@ -47,10 +47,10 @@ export default function Sidebar() {
             to="/"
             style={{ textDecoration: "none", color: "black" }}
           > */}
-            <li className="sidebarListItem">
+            {/* <li className="sidebarListItem">
               <Event className="sidebarIcon" />
               <span className="sidebarListItemText">Events</span>
-            </li>
+            </li> */}
           {/* </Link> */}
         </ul>
         <hr className="sidebarHr" />
