@@ -41,6 +41,15 @@
   width: 95%;
 }
 
+.currentFriend {
+  position: absolute;
+  top: 0;
+  width: 97%;
+  /* margin-top: 10px; */
+  height: 52px;
+  background-color: white;
+}
+
 .chatMessageInput {
   width: 90%;
   height: 40px;
