@@ -66,27 +66,29 @@ export default function Messenger() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const message = {
-      sender: user._id,
-      text: newMessage,
-      conversationId: currentChat._id ? currentChat._id : currentChat[0]._id,
-    };
+    if (newMessage !== "") {
+      const message = {
+        sender: user._id,
+        text: newMessage,
+        conversationId: currentChat._id ? currentChat._id : currentChat[0]._id,
+      };
 
-    const cId = currentChat._id ? currentChat : currentChat[0];
-    const receiverId = cId.members.find((member) => member !== user._id);
+      const cId = currentChat._id ? currentChat : currentChat[0];
+      const receiverId = cId.members.find((member) => member !== user._id);
 
-    socket.current.emit("sendMessage", {
-      senderId: user._id,
-      receiverId,
-      text: newMessage,
-    });
+      socket.current.emit("sendMessage", {
+        senderId: user._id,
+        receiverId,
+        text: newMessage,
+      });
 
-    try {
-      const res = await axios.post("/messages", message);
-      setMessages([...messages, res.data]);
-      setNewMessage("");
-    } catch (err) {
-      console.log(err);
+      try {
+        const res = await axios.post("/messages", message);
+        setMessages([...messages, res.data]);
+        setNewMessage("");
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -151,13 +153,11 @@ export default function Messenger() {
             <div className="chatBoxTop">
               {currentChat ? (
                 <>
-                  <div>
-                    <span>
+                  <div className="currentFriend">
                       <CloseFriend
                         key={currentFriend.id}
                         user={currentFriend}
                       />
-                    </span>
                     <hr className="sidebarHr" />
                   </div>
                   {messages.map((m, index) => (

@@ -79,6 +79,13 @@ export default function Rightbar({ user }) {
             <Carousel.Item interval={3000}>
               <img
                 className="d-block w-100"
+                src="assets/images/event.PNG"
+                alt="Image "
+              />
+            </Carousel.Item>
+            <Carousel.Item interval={3000}>
+              <img
+                className="d-block w-100"
                 src="assets/images/1.PNG"
                 alt="Image "
               />
@@ -90,13 +97,7 @@ export default function Rightbar({ user }) {
                 alt="Image "
               />
             </Carousel.Item>
-            <Carousel.Item interval={3000}>
-              <img
-                className="d-block w-100"
-                src="assets/images/3.PNG"
-                alt="Image "
-              />
-            </Carousel.Item>
+
             <Carousel.Item interval={3000}>
               <img
                 className="d-block w-100"
@@ -121,17 +122,11 @@ export default function Rightbar({ user }) {
             <Carousel.Item interval={3000}>
               <img
                 className="d-block w-100"
-                src="assets/images/7.PNG"
+                src="assets/images/event1.PNG"
                 alt="Image "
               />
             </Carousel.Item>
-            <Carousel.Item interval={3000}>
-              <img
-                className="d-block w-100"
-                src="assets/images/8.PNG"
-                alt="Image "
-              />
-            </Carousel.Item>
+           
           </Carousel>
         </div>
       </>
