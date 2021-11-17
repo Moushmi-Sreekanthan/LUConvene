@@ -1,11 +1,9 @@
 import "./topbar.css";
-import { Search, Person, Chat, Notifications } from "@material-ui/icons";
+import { Search, Person, Chat, Notifications, Close } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { useHistory } from "react-router";
-import SearchBar from "../searchBar/SearchBar";
-
 
 export default function Topbar({ searchUserList, searchCall }) {
   const history = useHistory();
@@ -13,13 +11,12 @@ export default function Topbar({ searchUserList, searchCall }) {
 
   const [searchValue, setSearchValue] = useState("");
   const [userList, setUserList] = useState([]);
-  // const [searchData, setSearchData] = useState([]);
+  const [showSearch, setShowSearch] = useState(false);
 
   const { user } = useContext(AuthContext);
-  // const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const _handleKeyDown = async (e) => {
-    //e.preventDefault();
+    setShowSearch(true);
     console.log();
     if (e.key === "Enter") {
       searchCall(searchValue);
@@ -32,21 +29,34 @@ export default function Topbar({ searchUserList, searchCall }) {
   };
 
   const onClickChat = () => {
+    setUserList([]);
     history.push("/messenger");
   };
 
   useEffect(() => {
-    if(searchUserList && searchUserList.data){
+    const delayDebounceFn = setTimeout(() => {
+      console.log(searchValue.length);
+      if (searchValue.length > 0) {
+        searchCall(searchValue);
+        setShowSearch(true);
+      } else {
+        setShowSearch(false);
+      }
+    }, 1000);
 
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchValue]);
+
+  useEffect(() => {
+    if (searchUserList && searchUserList.data) {
       setUserList(searchUserList.data);
     }
   }, [searchUserList]);
 
-  const itemClick = (userDetail) => {
-    // history.push(`/profile/${userDetail._id}/${userDetail.username}`);
-
+  const _handleCloseBtn = () => {
+    setUserList([]);
+    setSearchValue("");
   };
-
   console.log("searchUserList=====>", searchUserList);
 
   return (
@@ -62,45 +72,51 @@ export default function Topbar({ searchUserList, searchCall }) {
           <input
             type="text"
             value={searchValue}
-            onKeyDown={_handleKeyDown}
+            // onKeyDown={_handleKeyDown}
             onChange={(e) => setSearchValue(e.target.value)}
             placeholder="Search for friend"
             className="searchInput"
           />
+          <Close
+            className="searchIcon"
+            onClick={() => _handleCloseBtn()}
+            className="closeBtn"
+          />
         </div>
       </div>
-      {userList.length > 0 && (
+      {userList.length > 0 && showSearch && (
         <div className="searchList">
           <ul className="userlist">
             {userList.map((item) => (
-               <Link to={`/profile/${item._id}/${item.username}`}>
-              <li>
-                <div className="userListItem">
-                  <img
-                    src={
-                      user.profilePicture
-                        ? PF + user.profilePicture
-                        : PF + "person/noAvatar.png"
-                    }
-                    alt=""
-                    className="topbarImg"
-                  />
-                 <span className="userName"> {item.username} </span>
-                </div>
-              </li>
+              <Link
+                onClick={() => {
+                  setUserList([]);
+                  setShowSearch(false);
+                }}
+                to={`/profile/${item._id}/${item.username}`}
+                style={{ textDecoration: "none" }}
+              >
+                <li>
+                  <div className="userListItem">
+                    <img
+                      src={
+                        item.profilePicture
+                          ? PF + item.profilePicture
+                          : PF + "person/noAvatar.png"
+                      }
+                      alt=""
+                      className="topbarImg"
+                    />
+                    <span className="userName"> {item.username} </span>
+                  </div>
+                </li>
               </Link>
             ))}
           </ul>
         </div>
       )}
       <div className="topbarRight">
-        <div className="topbarLinks" onClick={() => logout()}>
-          <span className="topbarLink">Logout</span>
-        </div>
         <div className="topbarIcons">
-          <div className="topbarIconItem">
-            <Person />
-          </div>
           <div className="topbarIconItem" onClick={() => onClickChat()}>
             <Chat />
           </div>
@@ -116,7 +132,10 @@ export default function Topbar({ searchUserList, searchCall }) {
             className="topbarImg"
           />
         </Link>
-        <span className="userName">{user.username}</span>
+        <span className="userNameTop">{user.username}</span>
+        <div className="topbarLinks" onClick={() => logout()}>
+          <span className="topbarLink">Logout</span>
+        </div>
       </div>
     </div>
   );
